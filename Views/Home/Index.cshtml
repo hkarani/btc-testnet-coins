@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";   
+}
+
+<html>
+<body style="font-family: Verdana, Arial;">
+    <nav>
+        <div id="navdiv" class="nav-styling">
+            <div><button type="submit" name="button">Donate Coins</button></div>
+        </div>
+    </nav>
+    <!-- Main body of BTC TestNet Coins -->
+    <main>
+        <center>
+            <div style="margin-top: 100px">
+                <i class="bi bi-currency-bitcoin fa-10" id="bitcoinlogo" style="width: 20%; height: 5%; font-size: 40px; "><span>TC TestNet Coins</span></i>
+            </div>            
+            
+            <!-- Search bar -->
+            <div>
+                <div id="maindiv" class="input-box">
+                    @*<span><img src="search.png"></span>*@
+                    <input type="text" placeholder="Enter Bitcoin Address">
+                </div>
+
+                <div class="get-coins">
+                    <button type="submit"  name="button">Get Coins </button>
+                </div>
+            </div>
+            
+        </center>
+    </main>   
+</body>
+</html>
+
