@@ -1,4 +1,4 @@
-﻿namespace btcTestnetCoins.Model
+﻿namespace btcTestnetCoins.Models
 {
 	public class Payout
 	{

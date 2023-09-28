@@ -1,9 +1,9 @@
-﻿using btcTestnetCoins.Model;
+﻿using btcTestnetCoins.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace btcTestnetCoins.Controllers
 {
-	public class HomeController : Controller
+    public class HomeController : Controller
     {
 
         public IActionResult Index()
@@ -11,13 +11,15 @@ namespace btcTestnetCoins.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Index(Payout payout)
-        {
-            string? address = payout.Address;
-            Console.WriteLine(address);
-
-            return View(payout);
-        }
+		[HttpPost]
+		public IActionResult SendBitcoin(Payout payout)
+		{
+           
+            
+			return View(payout);
+           
+		}
+           
+           
     }
 }
