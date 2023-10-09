@@ -1,5 +1,6 @@
 ﻿using btcTestnetCoins.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace btcTestnetCoins.Controllers
 {
@@ -13,8 +14,24 @@ namespace btcTestnetCoins.Controllers
 
 		[HttpPost]
 		public IActionResult SendBitcoin(Payout payout)
-		{
-           
+		{     
+            using (var httpClient = new HttpClient()) {
+				
+				object pullPayment =
+                {
+                    destination: payout.Address,
+					amount:"",
+                    paymentMethod: ""
+
+				}
+            }
+				
+                    "amount":"",
+                    "paymentMethod": ""
+
+            
+                var response = 
+            }   
             
 			return View(payout);
            
