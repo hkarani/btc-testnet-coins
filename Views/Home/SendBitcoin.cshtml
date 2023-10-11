@@ -1,11 +1,11 @@
-﻿@model btcTestnetCoins.Models.Payout;
+﻿@model btcTestnetCoins.Models.PayoutDetails;
 @{
 	
 }
 
-@if(string.IsNullOrEmpty(@Model.Address)){
+@if(string.IsNullOrEmpty(@Model.DestinationAddress)){
 	<h1>You did not type in any address</h1>	
 }else {
-	<h1>BTC Sent to the address to @Model.Address</h1>	
+	<h1>BTC Sent to the address to @Model.DestinationAddress</h1>	
 }
 

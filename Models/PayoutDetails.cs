@@ -2,13 +2,10 @@
 {
 	public class PayoutDetails
 	{
-		public string? AddressDestination { get; set; }
-		public string PaymentMethod = "BTC";
-		public static double Amount = 0.0001;
-
-		public PayoutDetails(string AddressDestination) { 
-			this.AddressDestination = AddressDestination;
-		}
+		public string DestinationAddress { get; set; } = string.Empty;
+		public string? PaymentMethod { get; set; }
+		public string? Amount { get; set; }
+		public string? Approved { get; set; }
 
 	}
 }
