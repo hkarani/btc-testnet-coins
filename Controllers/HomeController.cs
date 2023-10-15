@@ -1,7 +1,7 @@
-﻿using btcTestnetCoins.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using BTCPayServer.Client;
+using BTCPayServer.Client.Models;
+using btcTestnetCSoins.Models;
 
 namespace btcTestnetCoins.Controllers
 {
@@ -10,63 +10,39 @@ namespace btcTestnetCoins.Controllers
 
         public IActionResult Index()
         {
-			var payoutDetails = new PayoutDetails
-			{
-			};
+			
             return View();
         }
 
 		[HttpPost]
-		public IActionResult SendBitcoin(PayoutDetails payoutDetails)
+		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutDetails)
 		{
-			var payOutDetailsObj = new PayoutDetails
+			var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
+			var apiKey = "7f75398b1cf1e841d23d91e3667a35e456668fe3";
+			var storeId = "EEw2ecPHLKTQ3mAJkfR5Y56FF2W4yp8vgJxKQncdNVf7";
+
+			var client = new BTCPayServerClient(btcpayServerUri, apiKey);
+
+			var payoutRequest = new CreatePayoutThroughStoreRequest
 			{
-				DestinationAddress = payoutDetails.DestinationAddress,
-				Amount = "15.00",
+				Amount = (decimal?)0.002,
 				PaymentMethod = "BTC",
-				Approved = "true",
-
+				Destination = payoutDetails.DestinationAddress,
+				Approved = true
 			};
 
-			var payOutDict = new Dictionary<string, string> { 
-				["destination"] = payOutDetailsObj.DestinationAddress, 
-				["amount"] = payOutDetailsObj.Amount, 
-				["paymentMethod"] = payOutDetailsObj.PaymentMethod,
-				["approved"] = payOutDetailsObj.Approved 
-			};
-		
-			string payOutDetailsJson = JsonSerializer.Serialize(payOutDict);
-			 
+			var payoutData = await client.CreatePayout(storeId, payoutRequest);
 
+			if (payoutData.State == PayoutState.AwaitingPayment)
+			{
+				Console.WriteLine($"Payout has been initialized. TX ID: {payoutData.Id}");
+			}
+			else
+			{
+				Console.WriteLine($"Payout failed with status: {payoutData.State}");
+			}
 
-
-			//string baseUrl = "https://docs.btcpayserver.org/api/v1/stores/EEw2ecPHLKTQ3mAJkfR5Y56FF2W4yp8vgJxKQncdNVf7/payouts";
-			//string token = "";
-			
-
-			//string jsonData = "{\"destination\": \"{}\", \"amount\": \"value2\",  \"paymentMethod\": \"value2\",  \"approved\": \"value2\"}";
-			//using (HttpClient client = new HttpClient())
-			//{
-			//	client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-			//	// Create a content object with the JSON data
-			//	var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-			//	// Send a POST request with JSON data in the request body
-			//	HttpResponseMessage response = await client.PostAsync(baseUrl, content);
-
-			//	if (response.IsSuccessStatusCode)
-			//	{
-			//		string responseContent = await response.Content.ReadAsStringAsync();
-			//		Console.WriteLine(responseContent);
-			//	}
-			//	else
-			//	{
-			//		Console.WriteLine($"Error: {response.StatusCode}");
-			//	}
-			//}
-
-			Console.WriteLine(payOutDetailsJson);
-			return View(payoutDetails);           
+			return View(payoutData);
 		}
            
            
