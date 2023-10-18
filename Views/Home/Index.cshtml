@@ -1,6 +1,7 @@
-﻿@model BTCPayServer.Client.Models.CreatePayoutThroughStoreRequest
+﻿
+@model btcTestnetCSoins.Models.PayoutAddress;
 @{
-	ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "";
 }
 
 <div class="container">
@@ -12,8 +13,8 @@
 			<div class="p-2">
 				<form method="post" asp-controller="Home" asp-action="SendBitcoin">
 					<div class="pb-1">
-						<label asp-for="Destination" class="text-center pb-1">Enter BTC Address</label>
-						<input asp-for="Destination" class="form-control form-control-lg" />
+						<label asp-for="DestinationAddress" class="text-center pb-1">Enter BTC Address</label>
+						<input asp-for="DestinationAddress" class="form-control form-control-lg" />
 					</div>
 					<div class="">
 						<button class="btn btn-success w-25" type="submit">Get Testnet Coins</button>

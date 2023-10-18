@@ -1,3 +1,5 @@
+using DotNetEnv;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -19,7 +21,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+Env.Load();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

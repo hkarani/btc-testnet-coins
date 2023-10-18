@@ -17,11 +17,11 @@ namespace btcTestnetCoins.Controllers
         }
 
 		[HttpPost]
-		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutDetails)
+		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
 		{
 			var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
-			var apiKey = "7f75398b1cf1e841d23d91e3667a35e456668fe3";
-			var storeId = "EEw2ecPHLKTQ3mAJkfR5Y56FF2W4yp8vgJxKQncdNVf7";
+			var apiKey = Environment.GetEnvironmentVariable("API_KEY");
+			var storeId = Environment.GetEnvironmentVariable("STORE_ID");
 
 			var client = new BTCPayServerClient(btcpayServerUri, apiKey);
 
@@ -29,7 +29,7 @@ namespace btcTestnetCoins.Controllers
 			{
 				Amount = (decimal?)0.002,
 				PaymentMethod = "BTC",
-				Destination = payoutDetails.DestinationAddress,
+				Destination = payoutAddress.DestinationAddress,
 				Approved = true
 			};
 
@@ -44,7 +44,7 @@ namespace btcTestnetCoins.Controllers
 				Console.WriteLine($"Payout failed with status: {payoutData.State}");
 			}
 
-			return View(payoutData);
+			return RedirectToAction("Index");
 		}
            
            
