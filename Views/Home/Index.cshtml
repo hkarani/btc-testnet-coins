@@ -4,6 +4,52 @@
 	ViewData["Title"] = "";
 }
 
+
+
+<script>
+
+	$(document).ready(function () {
+		
+		toastr.info('Toastr Page Loaded!',
+			
+					toastr.options = {
+				
+						"positionClass": "toast-top-center" 
+					}
+		);
+		
+
+		
+		$('#clickedButton').click(function () {
+		
+			
+		
+			toastr.success('Clicked the Just a Button',
+		
+						'Clicked',
+		
+						toastr.options = {
+		
+							"positionClass": "toast-top-left",
+		
+							"fadeIn": 300,
+		
+							"fadeOut": 100,
+		
+							"timeOut": 1000,   // 5000 is default
+		
+							"extendedTimeOut": 1000
+
+				})
+		
+
+
+		});
+
+	});
+
+</script>
+
 <div class="container">
 	<div class="row">
 		<div class="col-8 offset-2">
@@ -17,7 +63,7 @@
 						<input asp-for="DestinationAddress" class="form-control form-control-lg" />
 					</div>
 					<div class="">
-						<button class="btn btn-success w-25" type="submit">Get Testnet Coins</button>
+						<button class="btn btn-success w-25" id="clickedButton" type="submit">Get Testnet Coins</button>
 					</div>
 				</form>
 			</div>

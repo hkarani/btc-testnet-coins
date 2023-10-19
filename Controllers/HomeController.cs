@@ -4,6 +4,7 @@ using BTCPayServer.Client.Models;
 using btcTestnetCSoins.Models;
 
 
+
 namespace btcTestnetCoins.Controllers
 {
     public class HomeController : Controller
@@ -37,6 +38,7 @@ namespace btcTestnetCoins.Controllers
 
 			if (payoutData.State == PayoutState.AwaitingPayment)
 			{
+				TempData["message"] = $"0.002BTC sent to{payoutData.Destination}. Awaiting Confimation!";
 				Console.WriteLine($"Payout has been initialized. TX ID: {payoutData.Id}");
 			}
 			else
