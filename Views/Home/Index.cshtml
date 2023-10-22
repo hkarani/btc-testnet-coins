@@ -4,49 +4,18 @@
 	ViewData["Title"] = "";
 }
 
-
+@if(TempData["Success"] != null)
+{
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript">
+		alert("BTC sent")
+	</script>
+	
+}
 
 <script>
 
-	$(document).ready(function () {
-		
-		toastr.info('Toastr Page Loaded!',
-			
-					toastr.options = {
-				
-						"positionClass": "toast-top-center" 
-					}
-		);
-		
-
-		
-		$('#clickedButton').click(function () {
-		
-			
-		
-			toastr.success('Clicked the Just a Button',
-		
-						'Clicked',
-		
-						toastr.options = {
-		
-							"positionClass": "toast-top-left",
-		
-							"fadeIn": 300,
-		
-							"fadeOut": 100,
-		
-							"timeOut": 1000,   // 5000 is default
-		
-							"extendedTimeOut": 1000
-
-				})
-		
-
-
-		});
-
-	});
 
 </script>
 

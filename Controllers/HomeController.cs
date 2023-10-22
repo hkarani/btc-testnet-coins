@@ -20,6 +20,7 @@ namespace btcTestnetCoins.Controllers
 		[HttpPost]
 		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
 		{
+			
 			var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
 			var apiKey = Environment.GetEnvironmentVariable("API_KEY");
 			var storeId = Environment.GetEnvironmentVariable("STORE_ID");
@@ -38,13 +39,14 @@ namespace btcTestnetCoins.Controllers
 
 			if (payoutData.State == PayoutState.AwaitingPayment)
 			{
-				TempData["message"] = $"0.002BTC sent to{payoutData.Destination}. Awaiting Confimation!";
+				;
 				Console.WriteLine($"Payout has been initialized. TX ID: {payoutData.Id}");
 			}
 			else
 			{
 				Console.WriteLine($"Payout failed with status: {payoutData.State}");
 			}
+			TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
 
 			return RedirectToAction("Index");
 		}
