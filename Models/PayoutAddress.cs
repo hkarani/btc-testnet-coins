@@ -1,8 +1,11 @@
-﻿namespace btcTestnetCSoins.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace btcTestnetCSoins.Models
 {
 	public class PayoutAddress
 	{
-		public string DestinationAddress { get; set; } = "";
+		[Required]
+		public string? DestinationAddress { get; set; }
 		
 	}
 }
