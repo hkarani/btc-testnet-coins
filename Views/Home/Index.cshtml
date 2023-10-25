@@ -23,7 +23,7 @@
 			<div class="p-2">
 				<form method="post" asp-controller="Home" asp-action="SendBitcoin">
 					<div class="pb-1 mb-3">
-						<div asp-validation-summary="All">Empty field</div>
+						
 						<label asp-for="DestinationAddress" class="text-center pb-1">Enter Testnet BTC Address</label>
 						<input asp-for="DestinationAddress" class="form-control form-control-lg" />
 						<span asp-validation-for="DestinationAddress" class="text-danger"></span>
