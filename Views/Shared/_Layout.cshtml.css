@@ -1,6 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -10,6 +11,17 @@ a.navbar-brand {
 a {
   color: #0077cc;
 }
+
+.green-footer {
+    background-color: #4CAF50; /* Green color */
+    color: #fff; /* Text color */
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+
 
 .btn-primary {
   color: #fff;
