@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BTCPayServer.Client;
 using BTCPayServer.Client.Models;
-using btcTestnetCSoins.Models;
+using BTCTestnetCoins.Models;
 
 
 
@@ -20,7 +20,7 @@ namespace btcTestnetCoins.Controllers
 		[HttpPost]
 		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
 		{
-			
+
 			//var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
 			//var apiKey = Environment.GetEnvironmentVariable("API_KEY");
 			//var storeId = Environment.GetEnvironmentVariable("STORE_ID");
@@ -46,13 +46,13 @@ namespace btcTestnetCoins.Controllers
 			//{
 			//	Console.WriteLine($"Payout failed with status: {payoutData.State}");
 			//}
-			if (ModelState.IsValid)
+			ModelState.ClearValidationState(nameof(Index));
+			if (!TryValidateModel(payoutAddress, nameof(Index)))
 			{
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
 				return RedirectToAction(nameof(Index));
 			}
 
-			Console.WriteLine("View returned");
 			return RedirectToAction(nameof(Index));
 		}
 			

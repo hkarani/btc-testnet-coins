@@ -1,7 +1,13 @@
 ﻿
-@model btcTestnetCSoins.Models.PayoutAddress;
+@model BTCTestnetCoins.Models.PayoutAddress;
 @{
 	ViewData["Title"] = "";
+}
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial"></partial>
+	}
 }
 
 @if(TempData["Success"] != null)
@@ -37,11 +43,7 @@
 	</div>
 </div>
 
-@section Scripts {
-	@{
-		<partial name="_ValidationScriptsPartial"></partial>
-	}
-}
+
 
 
 
