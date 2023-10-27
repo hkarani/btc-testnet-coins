@@ -20,7 +20,7 @@ $(function () {
 
 	
 
-	$.validator.unobstrusive.adapter.add('address-validation', function (options) {
+	$.validator-unobtrusive.adapter.add('address-validation', function (options) {
 		options.rules['address-validation'] = [];
 		options.messages['address-validation'] = options.message;
 	});

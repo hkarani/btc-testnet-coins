@@ -9,9 +9,9 @@ namespace BTCTestnetCoins.Models
 		{
 			
 			string testnetRegexPattern = @"\b(tb(0([ac-hj-np-z02-9]{39}|[ac-hj-np-z02-9]{59})|1[ac-hj-np-z02-9]{8,87})|[mn2][a-km-zA-HJ-NP-Z1-9]{25,39})\b";
-			Regex regex = new Regex(testnetRegexPattern);
+			Regex regex = new(testnetRegexPattern);
 			bool isMatch = regex.IsMatch(context.Model as string);
-			List<string> usedAddressList = new List<string>
+			List<string> usedAddressList = new()
 			{
 				"tb1qswxzm4c6vs7g8xtqfs4j69ylmmvxch2z5667n9",
 				"tb1qmkcxqzx99hgylddul6acelrjkxust8760zh23m",

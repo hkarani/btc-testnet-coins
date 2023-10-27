@@ -7,7 +7,7 @@ namespace BTCTestnetCoins.Models
 	{
 		public override bool IsValid(object? value)
 		{
-			List<string> usedAddressList = new List<string>
+			List<string> usedAddressList = new ()
 			{
 				"tb1qswxzm4c6vs7g8xtqfs4j69ylmmvxch2z5667n9",
 				"tb1qmkcxqzx99hgylddul6acelrjkxust8760zh23m",

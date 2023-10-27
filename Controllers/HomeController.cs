@@ -46,8 +46,8 @@ namespace btcTestnetCoins.Controllers
 			//{
 			//	Console.WriteLine($"Payout failed with status: {payoutData.State}");
 			//}
-			ModelState.ClearValidationState(nameof(Index));
-			if (!TryValidateModel(payoutAddress, nameof(Index)))
+			
+			if (ModelState.IsValid)
 			{
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
 				return RedirectToAction(nameof(Index));

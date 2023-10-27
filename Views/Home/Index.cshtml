@@ -4,24 +4,20 @@
 	ViewData["Title"] = "";
 }
 
-@section Scripts {
-	@{
-		<partial name="_ValidationScriptsPartial"></partial>
-	}
-}
 
 @if(TempData["Success"] != null)
 {
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript">
+		console.log("Toasr was supposed to be called")
 		toastr.success("0.002 BTC sent. Awaiting Network Confimation!")
 	</script>
 } 
 
 
-<div class="container">
-	<div class="row">
+<div class="container ">
+	<div class="row border-dark">
 		<div class="col-8 offset-2">
 			<div class="bg-body-secondary text-center py-5 rounded-2">
 				<h1 class="display-6.fw-bold">BTCTestnetCoins</h1>
@@ -35,7 +31,7 @@
 						<span asp-validation-for="DestinationAddress" class="text-danger"></span>
 					</div>
 					<div class="">
-						<button class="btn btn-success w-25" id="clickedButton" type="submit">Get Testnet Coins</button>
+						<button class="btn btn-success w-25" type="submit">Get Testnet Coins</button>
 					</div>
 				</form>
 			</div>
