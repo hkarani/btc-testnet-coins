@@ -50,16 +50,13 @@ namespace btcTestnetCoins.Controllers
 			if (ModelState.IsValid)
 			{
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+				
 				return RedirectToAction(nameof(Index));
 			}
-
-			return RedirectToAction(nameof(Index));
+            Console.WriteLine("Model State is invalid");
+            return RedirectToAction(nameof(Index));
 		}
-			
-
-
-			
-           
+			      
            
     }
 }
