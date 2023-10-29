@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace BTCTestnetCoins.Models
 {
-	public class AddressValidationAttribute: ValidationAttribute, IClientModelValidator
+	public class AddressValidationAttribute: ValidationAttribute
 	{
-		public override bool IsValid(object? value)
+		protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
 		{
 			List<string> usedAddressList = new ()
 			{
@@ -20,25 +20,11 @@ namespace BTCTestnetCoins.Models
 			};
 
 			if (usedAddressList.Contains(value)) {
-				return true;
+				return new ValidationResult($"This address has already been used on this service");
 			}
 
-			return false;
+			return ValidationResult.Success;
 
-		}
-
-		public override string FormatErrorMessage(string name)
-		{
-			return $"This address is used";
-		}
-
-		
-		public void AddValidation(ClientModelValidationContext context)
-		{
-			var fieldName = context.Attributes["name"];
-			context.Attributes.TryAdd("data-val", "true");
-			context.Attributes.TryAdd("data-val-address-validation", FormatErrorMessage(fieldName));
-			Console.WriteLine("This function got called");
 		}
 	}
 }
