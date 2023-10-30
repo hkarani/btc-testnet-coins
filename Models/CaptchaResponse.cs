@@ -8,7 +8,6 @@
 		public string? ChallengeTimeStamp { get; set; }		
 		public decimal? CaptchaScore { get; set; }
 		public IEnumerable<string?> ?ErrorCodes { get; set; }
-		public string? ActionToResponse { get; set; }
-		
+		public string? ActionToResponse { get; set; }		
 	}
 }

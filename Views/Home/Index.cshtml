@@ -15,6 +15,19 @@
 	</script>
 } 
 
+<script src="https://www.google.com/recaptcha/api.js?render=6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL"></script>
+<script>
+	
+		grecaptcha.ready(function () {
+			grecaptcha.execute('6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL', { action: 'submit' }).then(function (token) {
+				$("#hiddenGoogleTokenField").val(token);
+				console.log(token);
+			});
+		});
+
+</script>
+
+
 
 <div class="container ">
 	<div class="row">
@@ -32,6 +45,8 @@
 					<div class="">
 						<button class="btn w-25 testnet-coins-button" type="submit">Get Testnet Coins</button>
 					</div>
+					<input type="hidden" id ="hiddenGoogleTokenField" asp-for="GoogleCaptureToken" value="">
+
 				</form>
 			</div>
 		</div>
