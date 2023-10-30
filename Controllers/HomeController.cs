@@ -50,7 +50,7 @@ namespace btcTestnetCoins.Controllers
 			if (ModelState.IsValid)
 			{
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-				
+				Console.WriteLine(payoutAddress.GoogleCaptureToken);			
 				return RedirectToAction(nameof(Index));
 			}
             Console.WriteLine("Model State is invalid");

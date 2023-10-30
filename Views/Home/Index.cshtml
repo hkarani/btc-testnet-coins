@@ -21,7 +21,7 @@
 		grecaptcha.ready(function () {
 			grecaptcha.execute('6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL', { action: 'submit' }).then(function (token) {
 				$("#hiddenGoogleTokenField").val(token);
-				console.log(token);
+				console.log("grecaptcha was called");
 			});
 		});
 
@@ -40,13 +40,13 @@
 					<div class="pb-1 mb-3">						
 						<label asp-for="DestinationAddress" class="text-center pb-1">Enter Testnet BTC Address</label>
 						<input asp-for="DestinationAddress" class="form-control form-control-lg" />
+						<input type="hidden" id="hiddenGoogleTokenField" asp-for="GoogleCaptureToken" value="">
 						<span asp-validation-for="DestinationAddress" class="text-danger"></span>
 					</div>
 					<div class="">
 						<button class="btn w-25 testnet-coins-button" type="submit">Get Testnet Coins</button>
 					</div>
-					<input type="hidden" id ="hiddenGoogleTokenField" asp-for="GoogleCaptureToken" value="">
-
+					
 				</form>
 			</div>
 		</div>
@@ -58,7 +58,6 @@
 		<partial name="_ValidationScriptsPartial"></partial>
 	}
 }
-
 
 
 
