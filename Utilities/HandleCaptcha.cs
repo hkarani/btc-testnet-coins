@@ -5,7 +5,7 @@ namespace BTCTestnetCoins.Utilities
 {
 	public class HandleCaptcha
 	{
-		public static async Task<bool> IsValid(string response, string userIpAddress)
+		public static async Task<bool> IsCaptchaValid(string response, string userIpAddress)
 		{
 			try
 			{

@@ -49,21 +49,19 @@ namespace btcTestnetCoins.Controllers
 			//}
 			
 			if (ModelState.IsValid)
-			{
-				
-				var response = payoutAddress.GoogleCaptureToken;
+			{				
+				var response = payoutAddress.GoogleCaptureToken;	
 				var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-				var isCaptchaValid = await HandleCaptcha.IsValid(response, userIpAddress);
-				if(isCaptchaValid)
-				{
-					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-					return RedirectToAction(nameof(Index));
-				}else
+				var isCaptchaValid = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
+				if(!isCaptchaValid)
 				{
 					TempData["Captcha"] = $"Your have failed the bot test";
 					return RedirectToAction(nameof(Index));
+				
 				}
-			
+
+				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+				return RedirectToAction(nameof(Index));
 			}
             return RedirectToAction(nameof(Index));
 		}		      
