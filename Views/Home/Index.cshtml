@@ -19,7 +19,7 @@
 <script>
 	
 		grecaptcha.ready(function () {
-			grecaptcha.execute('6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL', { action: 'submit' }).then(function (token) {
+			grecaptcha.execute('6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL', { action: 'sendBitcoin' }).then(function (token) {
 				$("#hiddenGoogleTokenField").val(token);
 				console.log("grecaptcha was called");
 			});

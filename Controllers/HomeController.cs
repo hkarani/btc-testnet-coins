@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using BTCPayServer.Client;
 using BTCPayServer.Client.Models;
 using BTCTestnetCoins.Models;
-
-
+using BTCTestnetCoins.Utilities;
+using Newtonsoft.Json;
 
 namespace btcTestnetCoins.Controllers
 {
@@ -49,14 +50,23 @@ namespace btcTestnetCoins.Controllers
 			
 			if (ModelState.IsValid)
 			{
-				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-				Console.WriteLine(payoutAddress.GoogleCaptureToken);			
-				return RedirectToAction(nameof(Index));
+				
+				var response = payoutAddress.GoogleCaptureToken;
+				var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+				var isCaptchaValid = await HandleCaptcha.IsValid(response, userIpAddress);
+				if(isCaptchaValid)
+				{
+					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+					return RedirectToAction(nameof(Index));
+				}else
+				{
+					TempData["Captcha"] = $"Your have failed the bot test";
+					return RedirectToAction(nameof(Index));
+				}
+			
 			}
-            Console.WriteLine("Model State is invalid");
             return RedirectToAction(nameof(Index));
-		}
-			      
+		}		      
            
     }
 }
