@@ -55,9 +55,8 @@ namespace btcTestnetCoins.Controllers
 				var isCaptchaValid = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
 				if(!isCaptchaValid)
 				{
-					TempData["Captcha"] = $"Your have failed the bot test";
-					return RedirectToAction(nameof(Index));
-				
+					TempData["Captcha"] = $"You have failed the bot test";
+					return RedirectToAction(nameof(Index));				
 				}
 
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
