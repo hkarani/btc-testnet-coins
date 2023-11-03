@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using BTCPayServer.Client;
 using BTCPayServer.Client.Models;
 using BTCTestnetCoins.Models;
+using BTCTestnetCoins.Data;
 using BTCTestnetCoins.Utilities;
 using Newtonsoft.Json;
-
 namespace btcTestnetCoins.Controllers
 {
     public class HomeController : Controller
@@ -19,7 +19,7 @@ namespace btcTestnetCoins.Controllers
         }
 
 		[HttpPost]
-		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
+		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress, BTCTestnetCoinsDbContext dbCtx)
 		{
 
 			//var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");

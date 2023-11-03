@@ -3,6 +3,7 @@ using System;
 using BTCTestnetCoins.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTCTestnetCoins.Migrations
 {
     [DbContext(typeof(BTCTestnetCoinsDbContext))]
-    partial class BTCTestnetCoinsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103012507_ErrorCodeCanBeNull")]
+    partial class ErrorCodeCanBeNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
@@ -58,16 +61,16 @@ namespace BTCTestnetCoins.Migrations
                     b.Property<string>("IpAddress")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool?>("IsBlocked")
+                    b.Property<bool>("IsBlocked")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool?>("IsEligible")
+                    b.Property<bool>("IsEligible")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastAccesed")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("NumberOfTimesAccessed")
+                    b.Property<int>("NumberOfTimesAccessed")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

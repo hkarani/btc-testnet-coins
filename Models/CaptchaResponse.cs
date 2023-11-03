@@ -26,7 +26,7 @@ namespace BTCTestnetCoins.Models
 		[JsonProperty("error-codes")]
 		public IEnumerable<string?> ?ErrorCodesList { get; set; }
 
-		public string ErrorCodes
+		public string? ErrorCodes
 		{
 			get
 			{

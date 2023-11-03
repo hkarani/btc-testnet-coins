@@ -12,6 +12,6 @@ namespace BTCTestnetCoins.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<CaptchaResponse> Captures { get; set; }
+        public DbSet<CaptchaResponse> CaptchaResponses { get; set; }
     }
 }

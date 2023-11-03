@@ -7,19 +7,15 @@
 		public Guid? Id { get; set; }
 		public string? IpAddress { get; set; }
 		public DateTime? FirstTimeAccesed { get; set; }
-		public DateTime LastAccesed { get; private set; }		
-		public int NumberOfTimesAccessed { get; set; }
-		public bool IsBlocked { get; set; }
-		public bool IsEligible
+		public DateTime LastAccesed { get; set; }		
+		public int? NumberOfTimesAccessed { get; set; }
+		public bool? IsBlocked { get; set; }
+		public bool? IsEligible
 		{
 			get { return eligible; }
 			set
-			{
-				TimeSpan timeDifference = DateTime.Now.Subtract(LastAccesed);
-				if (timeDifference.TotalDays > 2)
-				{
-					eligible = true;
-				}
+			{				
+					eligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
 			}
 		}
 
