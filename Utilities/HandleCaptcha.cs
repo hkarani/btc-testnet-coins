@@ -1,4 +1,5 @@
-﻿using BTCTestnetCoins.Models;
+﻿using BTCTestnetCoins.Data;
+using BTCTestnetCoins.Models;
 using Newtonsoft.Json;
 
 namespace BTCTestnetCoins.Utilities
@@ -7,7 +8,7 @@ namespace BTCTestnetCoins.Utilities
 	{
 		public static async Task<bool> IsCaptchaValid(string response, string userIpAddress)
 		{
-
+			BTCTestnetCoinsDbContext dbCtx = new();
 			try
 			{
 				var secretKey = Environment.GetEnvironmentVariable("GOOGLE_RECAPTCHA_SECRET_KEY");
@@ -23,6 +24,8 @@ namespace BTCTestnetCoins.Utilities
 				var verify = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
 				var captchaRepsoneJson = await verify.Content.ReadAsStringAsync();
 				var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(captchaRepsoneJson);
+				dbCtx.CaptchaResponses.Add(captchaResult);
+				dbCtx.SaveChanges();
 				return captchaResult?.CaptchaScore > 0.5
 					&& captchaResult?.ActionToResponse == "sendBitcoin" 
 					&& captchaResult?.Success == true;
@@ -30,6 +33,7 @@ namespace BTCTestnetCoins.Utilities
 			}
 			catch (Exception)
 			{
+
 				return false;
 			}
 		}
