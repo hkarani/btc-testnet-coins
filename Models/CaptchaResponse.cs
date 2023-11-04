@@ -30,7 +30,7 @@ namespace BTCTestnetCoins.Models
 		{
 			get
 			{
-				return System.Text.Json.JsonSerializer.Serialize(ErrorCodesList);
+				return errorCodes;
 			}
 			set
 			{

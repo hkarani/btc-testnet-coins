@@ -19,7 +19,7 @@ namespace btcTestnetCoins.Controllers
         }
 
 		[HttpPost]
-		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress, BTCTestnetCoinsDbContext dbCtx)
+		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
 		{
 
 			//var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
@@ -47,11 +47,37 @@ namespace btcTestnetCoins.Controllers
 			//{
 			//	Console.WriteLine($"Payout failed with status: {payoutData.State}");
 			//}
-			
+
+			var response = payoutAddress.GoogleCaptureToken;
+			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+			BTCTestnetCoinsDbContext dbCtx = new();
+
+			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
+			if (findUserByIP != null)
+			{
+				if(findUserByIP.IsBlocked.GetValueOrDefault())
+				{
+					TempData["UserStatus"] = "Your Ip has been blocked. Try again later";
+					Console.WriteLine("User is Blocked");
+					return RedirectToAction(nameof(Index));
+				}
+
+				if (!findUserByIP.IsEligible.GetValueOrDefault())
+				{
+					var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
+					TempData["UserStatus"] = $"Your Ip is ineligile for coins. Try again after {eligibleTime}";
+					Console.WriteLine("User is ineligible");
+					return RedirectToAction(nameof(Index));
+				}
+
+				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+				findUserByIP.LastAccesed = DateTime.Now;
+				findUserByIP.NumberOfTimesAccessed =+ 1;
+				return RedirectToAction(nameof(Index));
+			}
+
 			if (ModelState.IsValid)
-			{				
-				var response = payoutAddress.GoogleCaptureToken;	
-				var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+			{				;
 				var isCaptchaValid = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
 				if(!isCaptchaValid)
 				{
@@ -59,7 +85,21 @@ namespace btcTestnetCoins.Controllers
 					return RedirectToAction(nameof(Index));				
 				}
 
+				
+				User user = new()
+				{
+					IpAddress = userIpAddress,
+					FirstTimeAccesed = DateTime.Now,
+					NumberOfTimesAccessed = 1,
+					LastAccesed = DateTime.Now
+
+				};
+
+				dbCtx.Users.Add(user);
+				dbCtx.SaveChanges();
+
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+				Console.WriteLine("BTC sent to first time user");
 				return RedirectToAction(nameof(Index));
 			}
             return RedirectToAction(nameof(Index));

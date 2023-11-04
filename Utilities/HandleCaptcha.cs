@@ -7,6 +7,7 @@ namespace BTCTestnetCoins.Utilities
 	{
 		public static async Task<bool> IsCaptchaValid(string response, string userIpAddress)
 		{
+
 			try
 			{
 				var secretKey = Environment.GetEnvironmentVariable("GOOGLE_RECAPTCHA_SECRET_KEY");
