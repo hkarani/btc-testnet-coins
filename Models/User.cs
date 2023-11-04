@@ -10,16 +10,23 @@
 		public DateTime LastAccesed { get; set; }		
 		public int? NumberOfTimesAccessed { get; set; }
 		public bool? IsBlocked { get; set; } = false;
-		public bool? IsEligible
-		{
-			get;
-			set;
+		public bool? IsEligible{
+			get
+			{
+				eligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
+				return eligible;
+			}
+			set {
+
+				eligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
+
+			}
+			
 		}
 
 		public User()
 		{
 			Id = Guid.NewGuid();
-			IsEligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
 		}
 
 	}

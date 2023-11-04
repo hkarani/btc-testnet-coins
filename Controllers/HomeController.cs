@@ -71,6 +71,7 @@ namespace btcTestnetCoins.Controllers
 				}
 
 				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+				Console.WriteLine("BTC sent to subsequent user");
 				findUserByIP.LastAccesed = DateTime.Now;
 				findUserByIP.NumberOfTimesAccessed =+ 1;
 				return RedirectToAction(nameof(Index));

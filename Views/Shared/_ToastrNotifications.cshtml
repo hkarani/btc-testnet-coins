@@ -5,11 +5,12 @@
 }
 
 @if (TempData["Success"] != null)
-{
+{	
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript">
-		toastr.success("0.002 BTC sent. Awaiting Network Confimation!")
+		var tempDataMessage = "@TempData["Success"]"
+		toastr.success(tempDataMessage)
 	</script>
 }
 
@@ -18,6 +19,20 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript">
-		toastr.warning("It appears you have failed the Bot test. Please Try again later!")
+		var tempDataMessage = "@TempData["Captcha"]"
+		toastr.warning(tempDataMessage)
 	</script>
 } 
+
+@if (TempData["UserStatus"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script type="text/javascript">
+		var tempDataMessage = "@TempData["UserStatus"]"
+		toastr.warning(tempDataMessage)
+
+	</script>
+}
+
+
