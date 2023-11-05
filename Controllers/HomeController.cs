@@ -10,8 +10,6 @@ namespace btcTestnetCoins.Controllers
 {
     public class HomeController : Controller
     {
-
-
         public IActionResult Index()
         {
 			
@@ -21,32 +19,6 @@ namespace btcTestnetCoins.Controllers
 		[HttpPost]
 		public async Task <IActionResult> SendBitcoin(PayoutAddress payoutAddress)
 		{
-
-			//var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
-			//var apiKey = Environment.GetEnvironmentVariable("API_KEY");
-			//var storeId = Environment.GetEnvironmentVariable("STORE_ID");
-
-			//var client = new BTCPayServerClient(btcpayServerUri, apiKey);
-
-			//var payoutRequest = new CreatePayoutThroughStoreRequest
-			//{
-			//	Amount = (decimal?)0.002,
-			//	PaymentMethod = "BTC",
-			//	Destination = payoutAddress.DestinationAddress,
-			//	Approved = true
-			//};
-
-			//var payoutData = await client.CreatePayout(storeId, payoutRequest);
-
-			//if (payoutData.State == PayoutState.AwaitingPayment)
-			//{
-			//	;
-			//	Console.WriteLine($"Payout has been initialized. TX ID: {payoutData.Id}");
-			//}
-			//else
-			//{
-			//	Console.WriteLine($"Payout failed with status: {payoutData.State}");
-			//}
 
 			var response = payoutAddress.GoogleCaptureToken;
 			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
@@ -70,11 +42,23 @@ namespace btcTestnetCoins.Controllers
 					return RedirectToAction(nameof(Index));
 				}
 
-				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-				Console.WriteLine("BTC sent to subsequent user");
-				findUserByIP.LastAccesed = DateTime.Now;
-				findUserByIP.NumberOfTimesAccessed =+ 1;
-				return RedirectToAction(nameof(Index));
+				PayoutData payoutData = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
+
+				if(payoutData != null) {
+					TempData["Success"] = $"Payout failed";
+					Console.WriteLine("Sending transaction failed");
+				}
+
+				if(payoutData?.State == PayoutState.AwaitingPayment)
+				{
+
+					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+					Console.WriteLine("BTC sent to subsequent user");
+					findUserByIP.LastAccesed = DateTime.Now;
+					findUserByIP.NumberOfTimesAccessed = +1;
+					return RedirectToAction(nameof(Index));
+				}
+
 			}
 
 			if (ModelState.IsValid)
@@ -99,9 +83,22 @@ namespace btcTestnetCoins.Controllers
 				dbCtx.Users.Add(user);
 				dbCtx.SaveChanges();
 
-				TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-				Console.WriteLine("BTC sent to first time user");
-				return RedirectToAction(nameof(Index));
+				PayoutData payoutData = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
+
+				if (payoutData != null)
+				{
+					TempData["Success"] = $"Payout failed";
+					Console.WriteLine("Sending transaction failed");
+				}
+
+				if (payoutData?.State == PayoutState.AwaitingPayment)
+				{
+
+					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
+					Console.WriteLine("BTC sent to subsequent user");
+					return RedirectToAction(nameof(Index));
+				}
+				
 			}
             return RedirectToAction(nameof(Index));
 		}		      
