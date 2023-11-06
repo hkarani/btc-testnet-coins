@@ -5,7 +5,7 @@ namespace BTCTestnetCoins.Utilities
 {
 	public class Payout
 	{
-		public static async Task<PayoutData> SendTestNetCoins(string destinationAddress)
+		public static async Task<(PayoutData payoutData, bool Success)> SendTestNetCoins(string destinationAddress)
 		{
 			var btcpayServerUri = new Uri("https://testnet.demo.btcpayserver.org");
 			var apiKey = Environment.GetEnvironmentVariable("API_KEY");
@@ -22,13 +22,13 @@ namespace BTCTestnetCoins.Utilities
 			};
 			try
 			{
-				return await client.CreatePayout(storeId, payoutRequest);
+				var payoutData = await client.CreatePayout(storeId, payoutRequest);
+				return new(payoutData, true);
 
 			}catch(Exception)
 			{
-				throw;
+				return new(new PayoutData { }, false);	
 			}
-			
 		}
 	}
 }

@@ -42,14 +42,16 @@ namespace btcTestnetCoins.Controllers
 					return RedirectToAction(nameof(Index));
 				}
 
-				PayoutData payoutData = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
+				var (payoutData, Success) = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
 
-				if(payoutData != null) {
-					TempData["Success"] = $"Payout failed";
+				if(!Success) {
+					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";
+
 					Console.WriteLine("Sending transaction failed");
+					return RedirectToAction(nameof(Index));
 				}
 
-				if(payoutData?.State == PayoutState.AwaitingPayment)
+				if(payoutData.State == PayoutState.AwaitingPayment)
 				{
 
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
@@ -62,7 +64,7 @@ namespace btcTestnetCoins.Controllers
 			}
 
 			if (ModelState.IsValid)
-			{				;
+			{				
 				var isCaptchaValid = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
 				if(!isCaptchaValid)
 				{
@@ -83,15 +85,17 @@ namespace btcTestnetCoins.Controllers
 				dbCtx.Users.Add(user);
 				dbCtx.SaveChanges();
 
-				PayoutData payoutData = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
+				var (payoutData, Success) = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
 
-				if (payoutData != null)
+				if (!Success)
 				{
-					TempData["Success"] = $"Payout failed";
+					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";
+					Console.WriteLine(payoutData);
 					Console.WriteLine("Sending transaction failed");
+					return RedirectToAction(nameof(Index));
 				}
 
-				if (payoutData?.State == PayoutState.AwaitingPayment)
+				if (payoutData.State == PayoutState.AwaitingPayment)
 				{
 
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
