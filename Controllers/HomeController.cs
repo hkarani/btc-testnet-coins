@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using BTCPayServer.Client;
 using BTCPayServer.Client.Models;
 using BTCTestnetCoins.Models;
 using BTCTestnetCoins.Data;
 using BTCTestnetCoins.Utilities;
-using Newtonsoft.Json;
 namespace btcTestnetCoins.Controllers
 {
     public class HomeController : Controller

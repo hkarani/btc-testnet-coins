@@ -29,11 +29,9 @@ namespace BTCTestnetCoins.Utilities
 				return captchaResult?.CaptchaScore > 0.5
 					&& captchaResult?.ActionToResponse == "sendBitcoin" 
 					&& captchaResult?.Success == true;
-
 			}
 			catch (Exception)
 			{
-
 				return false;
 			}
 		}
