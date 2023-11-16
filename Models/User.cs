@@ -13,12 +13,12 @@
 		public bool? IsEligible{
 			get
 			{
-				eligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
+				eligible = DateTime.Now.Subtract(LastAccesed).TotalHours > 12;
 				return eligible;
 			}
 			set {
 
-				eligible = DateTime.Now.Subtract(LastAccesed).TotalDays > 3;
+				eligible = DateTime.Now.Subtract(LastAccesed).TotalHours > 12;
 
 			}
 			
