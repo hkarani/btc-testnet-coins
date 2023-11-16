@@ -24,35 +24,35 @@ namespace btcTestnetCoins.Controllers
 			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
 			if (findUserByIP != null)
 			{
-				if(findUserByIP.IsBlocked.GetValueOrDefault())
+				//"Logic for blocked" user
+				if (findUserByIP.IsBlocked.GetValueOrDefault())
 				{
-					TempData["UserStatus"] = "Your Ip has been blocked. Try again later";
-					Console.WriteLine("User is Blocked");
+					TempData["UserStatus"] = "Your Ip has been blocked. Try again later";					
 					return RedirectToAction(nameof(Index));
 				}
-
+				//Logic for ineligible user");
 				if (!findUserByIP.IsEligible.GetValueOrDefault())
 				{
+
 					var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
-					TempData["UserStatus"] = $"Your Ip is ineligile for coins. Try again after {eligibleTime}";
-					Console.WriteLine("User is ineligible");
+					TempData["UserStatus"] = $"Your Ip is ineligile for coins. Try again after {eligibleTime}";				
 					return RedirectToAction(nameof(Index));
 				}
 
 				var (payoutData, Success) = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
 
-				if(!Success) {
+				//Logic for failed payout transaction
+				if (!Success) {
 					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";
 
-					Console.WriteLine("Sending transaction failed");
 					return RedirectToAction(nameof(Index));
 				}
 
-				if(payoutData.State == PayoutState.AwaitingPayment)
+				// Send Testnet Coins to subsequent user");
+				if (payoutData.State == PayoutState.AwaitingPayment)
 				{
 
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-					Console.WriteLine("BTC sent to subsequent user");
 					findUserByIP.LastAccesed = DateTime.Now;
 					findUserByIP.NumberOfTimesAccessed = +1;
 					return RedirectToAction(nameof(Index));
@@ -86,17 +86,16 @@ namespace btcTestnetCoins.Controllers
 
 				if (!Success)
 				{
-					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";
-					Console.WriteLine(payoutData);
-					Console.WriteLine("Sending transaction failed");
+					//"Payout failure from BTCPayServer"
+					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";									
 					return RedirectToAction(nameof(Index));
 				}
 
 				if (payoutData.State == PayoutState.AwaitingPayment)
 				{
+					//"BTC sent to subsequent user";
 
-					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
-					Console.WriteLine("BTC sent to subsequent user");
+					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";					
 					return RedirectToAction(nameof(Index));
 				}
 				

@@ -30,13 +30,13 @@ namespace BTCTestnetCoins.Models
 				};
 			}else if(usedAddressList.Contains(context.Model as string))
 			{
-				Console.WriteLine("This is a used address");
+				//Return this a used address"
 				return new List<ModelValidationResult> {
 					new ModelValidationResult("", "This is address has already been used. Enter a fresh address")
 				};
 			}else
 			{
-				Console.WriteLine("Empty validation strin returned");
+				//"Empty validation string returned";
 				return Enumerable.Empty<ModelValidationResult>();	
 				
 			}
