@@ -28,7 +28,7 @@ namespace btcTestnetCoins.Controllers
 				if (findUserByIP.IsBlocked.GetValueOrDefault())
 				{
 					TempData["UserStatus"] = "Your Ip has been blocked. Try again later";					
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 				//Logic for ineligible user");
 				if (!findUserByIP.IsEligible.GetValueOrDefault())
@@ -36,7 +36,7 @@ namespace btcTestnetCoins.Controllers
 
 					var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
 					TempData["UserStatus"] = $"Your Ip is ineligile for coins. Try again after {eligibleTime}";				
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 
 				var (payoutData, Success) = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
@@ -45,7 +45,7 @@ namespace btcTestnetCoins.Controllers
 				if (!Success) {
 					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";
 
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 
 				// Send Testnet Coins to subsequent user");
@@ -55,7 +55,7 @@ namespace btcTestnetCoins.Controllers
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
 					findUserByIP.LastAccesed = DateTime.Now;
 					findUserByIP.NumberOfTimesAccessed = +1;
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 
 			}
@@ -66,7 +66,7 @@ namespace btcTestnetCoins.Controllers
 				if(!isCaptchaValid)
 				{
 					TempData["Captcha"] = $"You have failed the bot test";
-					return RedirectToAction(nameof(Index));				
+					return RedirectToAction("Index");				
 				}
 
 				
@@ -88,7 +88,7 @@ namespace btcTestnetCoins.Controllers
 				{
 					//"Payout failure from BTCPayServer"
 					TempData["Success"] = $"Payout failed. The address you entered is invalid or has already been used on this service";									
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 
 				if (payoutData.State == PayoutState.AwaitingPayment)
@@ -96,11 +96,11 @@ namespace btcTestnetCoins.Controllers
 					//"BTC sent to subsequent user";
 
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";					
-					return RedirectToAction(nameof(Index));
+					return RedirectToAction("Index");
 				}
 				
 			}
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
 		}		      
            
     }
