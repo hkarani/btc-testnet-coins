@@ -3,16 +3,18 @@
 @{
 	ViewData["Title"] = "";
 }
-
-<script src="https://www.google.com/recaptcha/api.js?render=6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-	
+	window.addEventListener('load', function(){
 		grecaptcha.ready(function () {
 			grecaptcha.execute('6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL', { action: 'sendBitcoin' }).then(function (token) {
-				$("#hiddenGoogleTokenField").val(token);
-				console.log("grecaptcha was called");
+				document.getElementById('hiddenGoogleTokenField').value = token;
+				console.log(token);
+
 			});
 		});
+	})
+	
 
 </script>
 
@@ -25,15 +27,15 @@
 				<h1 class="display-6.fw-bold"><i class="bi bi-currency-bitcoin"></i>TCTestnetCoins</h1>
 			</div>
 			<div class="p-2">
-				<form method="post" asp-controller="Home" asp-action="SendBitcoin">
+				<form method="post" asp-controller="Home" asp-action="SendBitcoin" id="address-form">
 					<div class="pb-1 mb-3">						
 						<label asp-for="DestinationAddress" class="text-center pb-1">Enter Testnet BTC Address</label>
 						<input asp-for="DestinationAddress" class="form-control form-control-lg" />
-						<input type="hidden" id="hiddenGoogleTokenField" asp-for="GoogleCaptureToken" value="">
+						<input type="hidden" id="hiddenGoogleTokenField" asp-for="GoogleCaptureToken">
 						<span asp-validation-for="DestinationAddress" class="text-danger"></span>
 					</div>
 					<div class="">
-						<button class="btn w-25 testnet-coins-button" type="submit">Get Testnet Coins</button>
+						<button class="btn w-25 testnet-coins-button"  type="submit">Get Testnet Coins</button>
 					</div>
 					
 				</form>
@@ -41,6 +43,12 @@
 		</div>
 	</div>
 </div>
+
+
+<script src="https://www.google.com/recaptcha/api.js?render=6Ledsd0oAAAAAIL4HLP0sj8YR4EQTD0WA7k_ZBhL"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
 
 @section Scripts {
 	@{

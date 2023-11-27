@@ -62,14 +62,24 @@ namespace btcTestnetCoins.Controllers
 
 			if (ModelState.IsValid)
 			{				
-				var isCaptchaValid = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
-				if(!isCaptchaValid)
+				var captchaResult = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
+				if(captchaResult.Success == false)
 				{
-					TempData["Captcha"] = $"You have failed the bot test";
+					await dbCtx.AddAsync(captchaResult);
+					await dbCtx.SaveChangesAsync();
+					TempData["Captcha"] = $"Something bad happened during the bot test. Please reload the page or try again later";
 					return RedirectToAction("Index");				
 				}
 
-				
+				if(captchaResult.CaptchaScore < 0.5)
+				{
+					await dbCtx.AddAsync(captchaResult);
+					await dbCtx.SaveChangesAsync();
+					TempData["Captcha"] = $"You have failed the bot test. Please reload the page and try again later";
+					return RedirectToAction("Index");
+
+				}
+
 				User user = new()
 				{
 					IpAddress = userIpAddress,
@@ -80,7 +90,7 @@ namespace btcTestnetCoins.Controllers
 				};
 
 				dbCtx.Users.Add(user);
-				dbCtx.SaveChanges();
+				await dbCtx.SaveChangesAsync();
 
 				var (payoutData, Success) = await Payout.SendTestNetCoins(payoutAddress.DestinationAddress);
 
@@ -100,7 +110,11 @@ namespace btcTestnetCoins.Controllers
 				}
 				
 			}
-            return RedirectToAction("Index");
+			var captchaResultTest = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
+
+			TempData["Success"] = $"{captchaResultTest} {response}";
+
+			return RedirectToAction("Index");
 		}		      
            
     }
