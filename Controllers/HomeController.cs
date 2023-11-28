@@ -115,7 +115,13 @@ namespace btcTestnetCoins.Controllers
 			TempData["Success"] = $"{captchaResultTest} {response}";
 
 			return RedirectToAction("Index");
-		}		      
-           
-    }
+		}
+
+		public IActionResult Errors()
+		{
+
+			return View();
+		}
+
+	}
 }
