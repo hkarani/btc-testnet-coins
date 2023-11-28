@@ -15,7 +15,7 @@ namespace BTCTestnetCoins.Utilities
 
 			var payoutRequest = new CreatePayoutThroughStoreRequest
 			{
-				Amount = (decimal?)0.002,
+				Amount = (decimal?)0.0001,
 				PaymentMethod = "BTC",
 				Destination = destinationAddress,
 				Approved = true
