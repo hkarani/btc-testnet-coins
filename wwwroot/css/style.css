@@ -1,0 +1,36 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+section {
+    height: 100vh;
+}
+
+body{
+    background-color: #161b22;
+    font-family: "Nunito", sans-serif;
+}
+
+.form-container {
+    background-color: #0d1117;
+    color: #fff;
+}
+
+.form-container .form-control {
+    background: transparent;
+}
+
+.form-container .form-control:focus {
+	color: #C9D1D9;
+	background-color: #0d1117;
+	border-color: #51b13e;
+	outline: 0;
+	box-shadow: 0 0 0 1px #51b13e inset;
+}
+
+.btcpay-footer {
+    font-size: 12                                                                                                                                                                                                                                                                                       px;
+    overflow: hidden;
+    padding: 0 5rem 1rem;
+    color: #8B949E;
+    background: #161B22;
+}
