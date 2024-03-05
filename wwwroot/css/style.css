@@ -34,3 +34,7 @@ body{
     color: #8B949E;
     background: #161B22;
 }
+
+.grecaptcha-badge { 
+    visibility: hidden !important;
+}
