@@ -28,10 +28,11 @@
                                 <i class="bi-currency-bitcoin" style="font-size: 40px;"></i>
                                 <span>TC Testnet Coins</span>
                             </div>
-                            <form action="" id="btc-test-form">
+                            <form asp-action="SendBitcoin"  method ="post" asp-controller="Home" id="address-form">
                                 <div class="form-group mb-3">
                                     <!-- <label for="Address">Enter Testnet BTC Address</label> -->
-                                    <input type="text" name="address" id="address" placeholder="Enter Testnet BTC Address" class="form-control form-control-lg">
+                                    <input type="text" id="address" asp-for="DestinationAddress" placeholder="Enter Testnet BTC Address" class="form-control form-control-lg">
+                                    <input type="hidden" id="hiddenGoogleTokenField" asp-for="GoogleCaptureToken">
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-success px-4 py-3 w-100" style="border-radius: 6px;"> <i class="bi bi-currency-bitcoin"></i> Get Testnet Coins</button>
