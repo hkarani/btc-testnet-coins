@@ -9,6 +9,13 @@ namespace btcTestnetCoins.Controllers
     {
         public IActionResult Index()
         {
+			BTCTestnetCoinsDbContext dbCtx = new();	
+			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();		
+			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
+			var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "You're not eligible": "You're eligible";
+			ViewData["Eligiblity"] = IsEligible;
+
+
 			
             return View();
         }
