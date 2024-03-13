@@ -13,6 +13,8 @@ namespace btcTestnetCoins.Controllers
 			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();		
 			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
 			var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "True" : "False";
+			var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
+			ViewData["EligibleDate"] = eligibleTime.ToString();
 			ViewData["Eligiblity"] = IsEligible;
 
 

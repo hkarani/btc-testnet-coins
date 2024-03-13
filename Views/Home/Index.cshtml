@@ -5,11 +5,11 @@
 
     string cssClassEligible = "";
     string cssClassInEligible = "";
+    string eligibleDate = (string)ViewData["EligibleDate"];
     
     if (ViewData["Eligiblity"] == "True")
     {
         cssClassEligible = "d-none";
-
     }
     else 
     {       
@@ -54,7 +54,7 @@
                             <div class="mt-3">
                                 <ul class="" style="list-style: none;">
                                     <li class="@(cssClassEligible) text-success"> <i class="bi bi-info-circle"></i> You're eligible for testnet coins </li>
-                                    <li class="@(cssClassInEligible) text-danger"> <i class="bi bi-info-circle"></i> You're not eligible for testnet coins right now try again from </li>
+                                    <li class="@(cssClassInEligible) text-danger"> <i class="bi bi-info-circle"></i> You're not eligible for testnet coins right now try again from @(eligibleDate) </li>
                                     <li class="text-danger"> <i class="bi bi-exclamation-triangle-fill text-danger"></i> Lorem, ipsum dolor.</li>
                                     <li> <i class="bi bi-info-circle"></i> Lorem, ipsum dolor.</li>
                                 </ul>
