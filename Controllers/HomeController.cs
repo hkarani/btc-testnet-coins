@@ -12,7 +12,7 @@ namespace btcTestnetCoins.Controllers
 			BTCTestnetCoinsDbContext dbCtx = new();	
 			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();		
 			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
-			var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "You're not eligible": "You're eligible";
+			var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "True" : "False";
 			ViewData["Eligiblity"] = IsEligible;
 
 

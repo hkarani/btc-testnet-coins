@@ -2,6 +2,19 @@
 @model BTCTestnetCoins.Models.PayoutAddress;
 @{
 	ViewData["Title"] = "";
+
+    string cssClassEligible = "";
+    string cssClassInEligible = "";
+    
+    if (ViewData["Eligiblity"] == "True")
+    {
+        cssClassEligible = "d-none";
+
+    }
+    else 
+    {       
+        cssClassInEligible = "d-none";
+    }
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -39,9 +52,10 @@
                                 </div>
                             </form>
                             <div class="mt-3">
-                                <ul class="text-danger" style="list-style: none;">
-                                    <li> <i class="bi bi-info-circle"></i> @ViewData["Eligiblity"]</li>
-                                    <li> <i class="bi bi-exclamation-triangle-fill"></i> Lorem, ipsum dolor.</li>
+                                <ul class="" style="list-style: none;">
+                                    <li class="@(cssClassEligible) text-success"> <i class="bi bi-info-circle"></i> You're eligible for testnet coins </li>
+                                    <li class="@(cssClassInEligible) text-danger"> <i class="bi bi-info-circle"></i> You're not eligible for testnet coins right now try again from </li>
+                                    <li class="text-danger"> <i class="bi bi-exclamation-triangle-fill text-danger"></i> Lorem, ipsum dolor.</li>
                                     <li> <i class="bi bi-info-circle"></i> Lorem, ipsum dolor.</li>
                                 </ul>
                             </div>
