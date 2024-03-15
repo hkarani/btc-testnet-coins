@@ -12,13 +12,18 @@ namespace btcTestnetCoins.Controllers
 			BTCTestnetCoinsDbContext dbCtx = new();	
 			var userIpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();		
 			var findUserByIP = dbCtx.Users.FirstOrDefault(ip  => ip.IpAddress == userIpAddress);
-			var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "True" : "False";
-			var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
-			ViewData["EligibleDate"] = eligibleTime.ToString();
-			ViewData["Eligiblity"] = IsEligible;
 
-
-			
+			if(findUserByIP != null)
+			{
+				var IsEligible = findUserByIP.IsEligible.GetValueOrDefault() ? "True" : "False";
+				var eligibleTime = findUserByIP.LastAccesed.AddDays(2);
+				ViewData["EligibleDate"] = eligibleTime.ToString();
+				ViewData["Eligiblity"] = IsEligible;
+			}
+			else
+			{
+				ViewData["Eligiblity"] = "True";				
+			}		
             return View();
         }
 
@@ -64,6 +69,8 @@ namespace btcTestnetCoins.Controllers
 					TempData["Success"] = $"0.002 BTC sent.Awaiting Confimation!";
 					findUserByIP.LastAccesed = DateTime.Now;
 					findUserByIP.NumberOfTimesAccessed = +1;
+					await dbCtx.AddAsync(findUserByIP);
+					await dbCtx.SaveChangesAsync();
 					return RedirectToAction("Index");
 				}
 
