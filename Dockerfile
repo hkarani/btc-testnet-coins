@@ -6,7 +6,7 @@ EXPOSE 80
 # Copy the published output of the ASP.NET Core application into the container
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["BTCTestnetCoins.csproj", "."]
+COPY ["app/src/BTCTestnetCoins.csproj", "."]
 RUN dotnet restore "./BTCTestnetCoins.csproj"
 COPY . .
 WORKDIR "/src/."
