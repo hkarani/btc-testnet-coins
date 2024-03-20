@@ -5,7 +5,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorOptions(options =>
+    {
+        options.ViewLocationFormats.Add("app/Views/{1}/{0}.cshtml");
+        options.ViewLocationFormats.Add("app/Views/Shared/{0}.cshtml");
+
+    });;
 
 var app = builder.Build();
 
