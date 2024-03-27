@@ -128,7 +128,7 @@ namespace btcTestnetCoins.Controllers
 			}
 			var captchaResultTest = await HandleCaptcha.IsCaptchaValid(response, userIpAddress);
 
-			TempData["Success"] = $"{captchaResultTest} {response}";
+			TempData["Success"] = $"Captcha error. Reload the page an try again";
 
 			return RedirectToAction("Index");
 		}
