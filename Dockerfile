@@ -21,7 +21,7 @@ RUN dotnet build "BTCTestnetCoins.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "BTCTestnetCoins.csproj" -c Release -o /app/publish
 
-COPY .env /app/publish
+COPY /app/.env /app/publish
 
 # Use the base image and copy the published output
 FROM base AS final
